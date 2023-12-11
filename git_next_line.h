@@ -6,12 +6,13 @@
 /*   By: aogbi <aogbi@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 22:03:50 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/11 22:07:28 by aogbi            ###   ########.fr       */
+/*   Updated: 2023/12/11 22:31:48 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef GIT_NEXT_LINE_H
 # define GIT_NEXT_LINE_H
+# define BUFF_SIZE 10
 
 char *get_next_line(int fd);
 
