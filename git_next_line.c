@@ -6,14 +6,16 @@
 /*   By: aogbi <aogbi@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 22:03:47 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/11 22:08:13 by aogbi            ###   ########.fr       */
+/*   Updated: 2023/12/11 22:23:31 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "git_next_line.h"
 
 char *get_next_line(int fd)
 {
     char    *line;
 
-    
+
     return (line);
 }
