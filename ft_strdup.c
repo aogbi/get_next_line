@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   git_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aogbi <aogbi@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: aogbi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 22:03:50 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/11 22:35:18 by aogbi            ###   ########.fr       */
+/*   Created: 2023/11/03 02:26:32 by aogbi             #+#    #+#             */
+/*   Updated: 2023/12/12 15:47:29 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef GIT_NEXT_LINE_H
-# define GIT_NEXT_LINE_H
+#include "get_next_line.h"
 
-# define BUFFER_SIZE 10
+char	*ft_strdup(const char *s)
+{
+	char	*copy;
 
-char *get_next_line(int fd);
-
-#endif
+	copy = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!copy)
+		return (NULL);
+	else
+		copy = ft_strcpy(copy, s);
+	return (copy);
+}
