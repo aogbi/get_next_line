@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aogbi <aogbi@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: aogbi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 16:55:23 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/13 01:30:55 by aogbi            ###   ########.fr       */
+/*   Updated: 2023/12/13 18:35:19 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <strings.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <limits.h>
@@ -26,16 +27,16 @@
 
 char *get_next_line(int fd);
 
-char	*ft_strjoin(char *s1, char *s2);
-size_t	ft_strlen(const char *s);
+void	ft_strjoin(char **s1, char *s2);
 
-char	*ft_strdup(char *s);
+size_t	ft_strlen(const char *s);
 
 char	*ft_strchr(const char *s, int c);
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 
-char	*ft_strcpy(char *dest, const char *src);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
+char	*ft_strdup(char *s);
 
 #endif

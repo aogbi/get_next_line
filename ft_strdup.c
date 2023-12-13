@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aogbi <aogbi@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: aogbi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:26:32 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/13 01:41:41 by aogbi            ###   ########.fr       */
+/*   Updated: 2023/12/13 18:48:20 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,16 @@
 char	*ft_strdup(char *s)
 {
 	char	*copy;
+	size_t	len;
 
 	if (!s)
 		return (NULL);
-	copy = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	len = ft_strlen(s);
+	copy = (char *)malloc(sizeof(char) * (len + 1));
 	if (!copy)
-	{
-		free(copy);
 		return (NULL);
-	}
 	else
-		copy = ft_strcpy(copy, s);
+		ft_strlcpy(copy, s, len + 1);
 	//free(s);
 	return (copy);
 }

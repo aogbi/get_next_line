@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aogbi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 16:29:04 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/12 15:25:03 by aogbi            ###   ########.fr       */
+/*   Created: 2023/11/03 02:32:20 by aogbi             #+#    #+#             */
+/*   Updated: 2023/12/13 17:19:35 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-char	*ft_strcpy(char *dest, const char *src)
-{
-	int	i;
 
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	src_len;
+	size_t	i;
+
+	src_len = 0;
 	i = 0;
 	while (src[i])
 	{
-		dest[i] = src[i];
+		src_len++;
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	if (size == 0)
+		return (src_len);
+	i = 0;
+	while (src[i] && i < size - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (src_len);
 }

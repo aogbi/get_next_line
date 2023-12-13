@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aogbi <aogbi@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: aogbi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 16:55:20 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/13 01:33:20 by aogbi            ###   ########.fr       */
+/*   Updated: 2023/12/13 18:36:49 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static char	*readfromfile(int fd, char **stavar)
 		free(*stavar);
 		*stavar = NULL;
 	}
+	//bzero(buffer, BUFFER_SIZE + 1);
 	while ((bytesRead = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[bytesRead] = '\0';
@@ -34,10 +35,8 @@ static char	*readfromfile(int fd, char **stavar)
 			*stavar = ft_strdup(tmp);
 			*tmp = '\0';
 		}
-		if (!line)
-			line = ft_strdup(buffer);
-		else
-			line = ft_strjoin(line, buffer);
+		ft_strjoin(&line, buffer);
+		// printf("\n---%s---\n", line);
 		if (*stavar)
 			break;
 	}
@@ -52,8 +51,8 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= INT_MAX)
 		return (NULL);
 	line = readfromfile(fd, &stavar);
-	if (stavar)
-		*stavar = '\n';
+	if (!stavar && !line)
+		return (NULL);
 	return (line);
 }
 
@@ -63,15 +62,12 @@ int	main(void)
 
 	fd = open("test.txt", O_RDONLY);
 	char *line = get_next_line(fd);
-	//printf("%s", line);
 	while (line)
 	{
 		printf("%s", line);
 		free(line);
 		line = get_next_line(fd);
 	}
-	//free(line);
-	//system("leaks a.out");
-	close(fd);	
+	close(fd);
 	return (0);
 }
