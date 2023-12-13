@@ -1,6 +1,1 @@
 Try to read thest line from fd
-Try to read the second line from fd
-Try to read the third line from fd
-Try to read the forth line from fd
-cc *.c -fsanitize=address
-valgring ./a.out
