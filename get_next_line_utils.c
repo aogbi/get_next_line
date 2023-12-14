@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aogbi <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: aogbi <aogbi@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 20:56:57 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/13 21:04:50 by aogbi            ###   ########.fr       */
+/*   Updated: 2023/12/14 00:56:31 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@ size_t	ft_strlen(const char *s)
 	while (s[i])
 		i++;
 	return (i);
+}
+
+void	free_memory(char **ptr)
+{
+	if (*ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
 }
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)

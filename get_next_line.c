@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aogbi <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: aogbi <aogbi@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 16:55:20 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/13 21:51:05 by aogbi            ###   ########.fr       */
+/*   Updated: 2023/12/14 00:58:05 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ft_strjoin(char **s1, char *s2)
 	size_t	len2;
 	char	*new;
 
-	if(!*s1 && !s2)
+	if (!*s1 && !s2)
 		return ;
 	len1 = 0;
 	len2 = 0;
@@ -50,7 +50,9 @@ static void	ft_strjoin(char **s1, char *s2)
 	*s1 = new;
 	ft_strlcat(*s1, s2, len1 + len2 + 1);
 }
-static char	*helpreadfromfile(char *buffer, int bytesread, char **stavar, char *line)
+
+static char	*helpreadfromfile(char *buffer, int bytesread, char **stavar,
+		char *line)
 {
 	char	*tmp;
 
@@ -60,30 +62,29 @@ static char	*helpreadfromfile(char *buffer, int bytesread, char **stavar, char *
 	{
 		*stavar = ft_strdup(tmp + 1);
 		*(tmp + 1) = '\0';
-
 	}
 	ft_strjoin(&line, buffer);
 	return (line);
 }
 
-static char	*readfromfile(int fd, char **stavar)
+static char	*readfromfile(int fd, char **stavar, char *line)
 {
 	char	buffer[BUFFER_SIZE + 1];
-	char	*line;
 	int		bytesread;
 
-	line = NULL;
 	if (*stavar)
 	{
 		line = ft_strdup(*stavar);
-		free(*stavar);
-		*stavar = NULL;
+		free_memory(stavar);
 	}
 	while (1)
 	{
 		bytesread = read(fd, buffer, BUFFER_SIZE);
 		if (bytesread == -1 || (bytesread == 0 && !line))
+		{
+			free_memory(&line);
 			return (NULL);
+		}
 		else if (bytesread == 0)
 			break ;
 		line = helpreadfromfile(buffer, bytesread, stavar, line);
@@ -98,11 +99,15 @@ char	*get_next_line(int fd)
 	static char	*stavar;
 	char		*line;
 
+	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= INT_MAX)
 		return (NULL);
-	line = readfromfile(fd, &stavar);
+	line = readfromfile(fd, &stavar, line);
 	if (!stavar && !line)
+	{
+		free_memory(&line);
 		return (NULL);
+	}
 	return (line);
 }
 
