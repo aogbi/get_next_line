@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aogbi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/10 16:55:20 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/15 19:11:21 by aogbi            ###   ########.fr       */
+/*   Created: 2023/12/15 19:08:07 by aogbi             #+#    #+#             */
+/*   Updated: 2023/12/15 19:22:48 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*ft_strdup(char *s)
 {
@@ -97,34 +97,17 @@ static char	*readfromfile(int fd, char **stavar, char *line)
 
 char	*get_next_line(int fd)
 {
-	static char	*stavar;
+	static char	*stavar[OPEN_MAX];
 	char		*line;
 
 	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= INT_MAX)
 		return (NULL);
-	line = readfromfile(fd, &stavar, line);
-	if (!stavar && !line)
+	line = readfromfile(fd, &stavar[fd], line);
+	if (!stavar[fd] && !line)
 	{
 		free_memory(&line);
 		return (NULL);
 	}
 	return (line);
 }
-
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*line;
-
-// 	fd = open("test.txt", O_RDONLY);
-// 	line = get_next_line(fd);
-// 	while (line)
-// 	{
-// 		printf("%s", line);
-// 		free(line);
-// 		line = get_next_line(fd);
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
