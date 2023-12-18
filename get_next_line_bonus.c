@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aogbi <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: aogbi <aogbi@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 19:08:07 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/15 19:22:48 by aogbi            ###   ########.fr       */
+/*   Updated: 2023/12/17 22:36:00 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-
-static char	*ft_strdup(char *s)
-{
-	char	*copy;
-	size_t	len;
-
-	if (!s)
-		return (NULL);
-	len = ft_strlen(s);
-	copy = (char *)malloc(sizeof(char) * (len + 1));
-	if (!copy)
-		return (NULL);
-	else
-		ft_strlcpy(copy, s, len + 1);
-	return (copy);
-}
 
 static void	ft_strjoin(char **s1, char *s2)
 {
@@ -46,7 +30,7 @@ static void	ft_strjoin(char **s1, char *s2)
 		return ;
 	*new = '\0';
 	if (*s1)
-		ft_strlcpy(new, *s1, len1 + 1);
+		ft_strlcat(new, *s1, len1 + 1);
 	free_memory(s1);
 	*s1 = new;
 	ft_strlcat(*s1, s2, len1 + len2 + 1);
@@ -68,16 +52,11 @@ static char	*helpreadfromfile(char *buffer, int bytesread, char **stavar,
 	return (line);
 }
 
-static char	*readfromfile(int fd, char **stavar, char *line)
+static char	*helpfunction(int fd, char *line, char **stavar)
 {
 	char	buffer[BUFFER_SIZE + 1];
 	int		bytesread;
 
-	if (*stavar)
-	{
-		line = ft_strdup(*stavar);
-		free_memory(stavar);
-	}
 	while (1)
 	{
 		bytesread = read(fd, buffer, BUFFER_SIZE);
@@ -95,16 +74,36 @@ static char	*readfromfile(int fd, char **stavar, char *line)
 	return (line);
 }
 
+static char	*readfromfile(int fd, char **stavar, char *line)
+{
+	char	*tmp;
+
+	if (*stavar)
+	{
+		line = ft_strdup(*stavar);
+		free_memory(stavar);
+		tmp = ft_strchr(line, '\n');
+		if (tmp)
+		{
+			*stavar = ft_strdup(tmp + 1);
+			*(tmp + 1) = '\0';
+			return (line);
+		}
+	}
+	line = helpfunction(fd, line, stavar);
+	return (line);
+}
+
 char	*get_next_line(int fd)
 {
-	static char	*stavar[OPEN_MAX];
+	static char	*stavar[1024];
 	char		*line;
 
 	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= INT_MAX)
 		return (NULL);
 	line = readfromfile(fd, &stavar[fd], line);
-	if (!stavar[fd] && !line)
+	if (!*stavar && !line)
 	{
 		free_memory(&line);
 		return (NULL);

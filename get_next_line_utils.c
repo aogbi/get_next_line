@@ -6,7 +6,7 @@
 /*   By: aogbi <aogbi@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 20:56:57 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/14 00:56:31 by aogbi            ###   ########.fr       */
+/*   Updated: 2023/12/17 19:01:57 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,32 +58,26 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	}
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+char	*ft_strdup(char *s)
 {
-	size_t	src_len;
-	size_t	i;
+	char	*copy;
+	size_t	len;
 
-	src_len = 0;
-	i = 0;
-	while (src[i])
-	{
-		src_len++;
-		i++;
-	}
-	if (size == 0)
-		return (src_len);
-	i = 0;
-	while (src[i] && i < size - 1)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (src_len);
+	if (!s)
+		return (NULL);
+	len = ft_strlen(s);
+	copy = (char *)malloc(sizeof(char) * (len + 1));
+	if (!copy)
+		return (NULL);
+	*copy = '\0';
+	ft_strlcat(copy, s, len + 1);
+	return (copy);
 }
 
 char	*ft_strchr(const char *s, int c)
 {
+	if (!s)
+		return (NULL);
 	while (*s)
 	{
 		if (*s == (char)c)
