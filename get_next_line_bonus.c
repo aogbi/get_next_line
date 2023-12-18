@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aogbi <aogbi@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: aogbi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 19:08:07 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/17 22:36:00 by aogbi            ###   ########.fr       */
+/*   Updated: 2023/12/18 15:54:30 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ static char	*readfromfile(int fd, char **stavar, char *line)
 
 	if (*stavar)
 	{
+		if (!**stavar)
+			free_memory(stavar);
 		line = ft_strdup(*stavar);
 		free_memory(stavar);
 		tmp = ft_strchr(line, '\n');
@@ -96,7 +98,7 @@ static char	*readfromfile(int fd, char **stavar, char *line)
 
 char	*get_next_line(int fd)
 {
-	static char	*stavar[1024];
+	static char	*stavar[OPEN_MAX];
 	char		*line;
 
 	line = NULL;

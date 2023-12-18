@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aogbi <aogbi@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: aogbi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 16:55:20 by aogbi             #+#    #+#             */
-/*   Updated: 2023/12/18 01:00:20 by aogbi            ###   ########.fr       */
+/*   Updated: 2023/12/18 15:56:18 by aogbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ static char	*readfromfile(int fd, char **stavar, char *line)
 
 	if (*stavar)
 	{
+		if (!**stavar)
+			free_memory(stavar);
 		line = ft_strdup(*stavar);
 		free_memory(stavar);
 		tmp = ft_strchr(line, '\n');
@@ -109,21 +111,4 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	return (line);
-}
-
-int	main(void)
-{
-	int		fd;
-	char	*line;
-
-	fd = open("test.txt", O_RDONLY);
-	line = get_next_line(fd);
-	while (line)
-	{
-		printf("%s", line);
-		free(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
-	return (0);
 }
